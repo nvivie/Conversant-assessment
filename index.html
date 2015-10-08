@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <title>Bubbles Conversant</title>
+    <style type="text/css">
+
+    html body{
+      margin:0;
+      padding:0;
+    }
+
+    body{
+      background:#000;
+      padding: 50px;
+      background-color: #000;
+
+    }
+
+    .centered{
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      margin-left: -30vh;
+      margin-top: -30vh;
+    }
+
+    .bubble-container{
+      width:64vh;
+      height:64vh;
+      margin: 0px auto;
+      position: relative;
+    }
+
+    .bubbles {
+        background: #2F3E77; 
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin: 10px 10px;
+      }
+
+    .bubbles.animate{
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: bubbles 2s 200ms linear infinite;
+        animation-fill-mode: forwards;
+    }
+
+    form{
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      margin-left: -60px;
+      margin-top: -20px;
+    }
+
+    .resetBtn{
+      width:120px;
+      height: 40px;
+      background: #17B9C1;
+      color: #fff;
+      border: none;
+      padding: 0;
+      margin-top: 10px;
+      border-radius: 6px;
+      margin-bottom: 10px;  
+    }
+
+    @keyframes bubbles{
+      0%,100%{
+        transform: translate(0,0) scale(0,0) rotate(0deg);
+      }
+      30%{
+        transform: translate(20px,40px) scale(2,2) rotate(180deg);
+      }
+      34%{
+        transform: translate(60px,80px) scale(0,0) rotate(360deg);
+      }
+      60%{
+        transform: translate(0px,80px) scale(2,2) rotate(0deg);
+      }
+      64%{
+        transform: translate(-60px,80px) scale(0,0) rotate(180deg);
+      }
+      94%{
+        transform: translate(0px,0px) scale(2,2) rotate(360deg);
+      }
+      100%{
+        transform: translate(0px,0px) scale(0,0) rotate(180deg);
+      }
+    }
+    </style>
+  </head>
+
+  <body>
+    <div class="centered">
+      <div class="bubble-container"></div>
+    </div>
+    <form>
+      <button class="resetBtn">Reset</button>
+    </form>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        // get data from json file and append to the DOM
+        $.getJSON('circles.json', function(data){
+          for(i = 0; i < data.numOfCircles; i++){
+            $('.bubble-container').append('<div class="bubbles"></div>');
+          }
+        });
+
+        // bubbles change randome colors
+        $('.bubble-container').on('click', 'div.bubbles', function(){
+              $(this).css({'background-color':'#' + Math.random().toString(16).substring(2,8)});
+              $(this).toggleClass('animate');
+        });
+
+        //reset button
+        $('.resetBtn').click(function(){
+          $('.bubble-container').reset();
+        });
+
+    </script>
+  </body>
+</html>
